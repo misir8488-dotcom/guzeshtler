@@ -1328,7 +1328,9 @@ const THEORY = {
   mentiq: { key: "questions102", name: "Gəlir vergisi" },
   menfeet: { key: "questions106", name: "Mənfəət vergisi" },
   emlak: { key: "questions199", name: "Əmlak vergisi" },
-  torpaq: { key: "questions207", name: "Torpaq vergisi" }
+  torpaq: { key: "questions207", name: "Torpaq vergisi" },
+  sosial: { key: "questionsSosial", name: "Sosial sığorta" },
+  orta: { key: "questionsOrta", name: "Orta əməkhaqqı" }
 };
 function startQuiz(kind) {
   const t = THEORY[kind];
@@ -1351,6 +1353,8 @@ function renderQuizHome() {
   const qn106 = (DATA.questions106 || []).length;
   const qn199 = (DATA.questions199 || []).length;
   const qn207 = (DATA.questions207 || []).length;
+  const qnSosial = (DATA.questionsSosial || []).length;
+  const qnOrta = (DATA.questionsOrta || []).length;
   const lens = [10, 25, 50, 999].map((n) => '<button type="button" data-act="quiz-len" data-len="' + n + '"' + (ui.quizLen === n ? ' class="is-on"' : "") + ">" + (n >= 900 ? "Hamısı" : n) + "</button>").join("");
   document.getElementById("view").innerHTML =
     '<p class="hint" style="text-align:left;margin-bottom:8px">Nəzəri suallarda bənd nömrəsi çıxmır. Sadəcə qaydanı seç.</p>' +
@@ -1362,6 +1366,8 @@ function renderQuizHome() {
       '<button type="button" class="quiz-card wide" data-act="quiz-start" data-kind="menfeet"><strong>Mənfəət vergisi — nəzəri suallar</strong><span>' + qn106 + ' sual. Faiz, müddət, kim azaddır. Nömrə yoxdur.</span></button>' +
       '<button type="button" class="quiz-card wide" data-act="quiz-start" data-kind="emlak"><strong>Əmlak vergisi — nəzəri suallar</strong><span>' + qn199 + ' sual. 30 manat, 75%, 1 milyon, hotel, müflislik. Nömrə yoxdur.</span></button>' +
       '<button type="button" class="quiz-card wide" data-act="quiz-start" data-kind="torpaq"><strong>Torpaq vergisi — nəzəri suallar</strong><span>' + qn207 + ' sual. 10 manat, kəşfiyyat 75%, teatr, ay/il. Nömrə yoxdur.</span></button>' +
+      '<button type="button" class="quiz-card wide" data-act="quiz-start" data-kind="sosial"><strong>Sosial sığorta — nəzəri suallar</strong><span>' + qnSosial + ' sual. 22/3, 200/8000, 8-5-6%, subsidiya, baza. Nömrə yoxdur.</span></button>' +
+      '<button type="button" class="quiz-card wide" data-act="quiz-start" data-kind="orta"><strong>Orta əməkhaqqı — qarışıq suallar</strong><span>' + qnOrta + ' sual. Məzuniyyət siyahısı vs digər hallar. Artıq iş, bayram, əvəzetmə, mükafat.</span></button>' +
       '<button type="button" class="quiz-card" data-act="quiz-start" data-kind="bend"><strong>Hansı bənddir?</strong><span>Mətn görünür. Dörd nömrədən düzgününü seç.</span></button>' +
       '<button type="button" class="quiz-card" data-act="quiz-start" data-kind="reqem"><strong>Rəqəmi tap</strong><span>Manat, faiz, il və ya tarix boş qalır. Düzgün rəqəmi seç.</span></button>' +
     "</div>";
@@ -1370,7 +1376,7 @@ function renderQuiz() {
   setTab("sinaq");
   const quiz = ui.quiz;
   if (!quiz) { renderQuizHome(); return; }
-  const labels = { bend: "Sınaq · bənd", reqem: "Sınaq · rəqəm", mentiq: "Sınaq · gəlir", edv: "Sınaq · ƏDV", menfeet: "Sınaq · mənfəət", emlak: "Sınaq · əmlak", torpaq: "Sınaq · torpaq" };
+  const labels = { bend: "Sınaq · bənd", reqem: "Sınaq · rəqəm", mentiq: "Sınaq · gəlir", edv: "Sınaq · ƏDV", menfeet: "Sınaq · mənfəət", emlak: "Sınaq · əmlak", torpaq: "Sınaq · torpaq", sosial: "Sınaq · sosial", orta: "Sınaq · orta əməkhaqqı" };
   setEyebrow(labels[quiz.kind] || "Sınaq");
   if (quiz.done) {
     const right = quiz.questions.filter((q) => q.picked === q.answer).length;

@@ -111,6 +111,8 @@ const questions164 = loadQuestions("questions-164.js", "Q164");
 const questions106 = loadQuestions("questions-106.js", "Q106");
 const questions199 = loadQuestions("questions-199.js", "Q199");
 const questions207 = loadQuestions("questions-207.js", "Q207");
+const questionsSosial = loadQuestions("questions-sosial.js", "QSosial");
+const questionsOrta = loadQuestions("questions-orta.js", "QOrta");
 const vatMatrix = loadVatMatrix();
 const articles = files.map(parseFile);
 for (const art of articles) {
@@ -147,16 +149,18 @@ const cleanOverlaps = overlaps
   .filter((o) => o.items.length);
 const vatUnknown = Object.keys(vatMatrix.rows || {}).filter((id) => !known.has(id));
 if (vatUnknown.length) throw new Error("Unknown VAT matrix ids: " + vatUnknown.join(", "));
-const json = JSON.stringify({ articles, overlaps: cleanOverlaps, questions102, questions164, questions106, questions199, questions207, vatMatrix }).replace(/</g, "\\u003c");
+const json = JSON.stringify({ articles, overlaps: cleanOverlaps, questions102, questions164, questions106, questions199, questions207, questionsSosial, questionsOrta, vatMatrix }).replace(/</g, "\\u003c");
 html = html.replace("__DATA_JSON__", json);
 fs.writeFileSync(path.join(root, "index.html"), html);
 
 const counts = articles.map((a) => `${a.code}:${a.items.length}`).join(" ");
 const titled = articles.reduce((n, a) => n + a.items.filter((it) => it.title).length, 0);
-function checkBank(list, re, label) {
-  const qIds = new Set(list.map((q) => q.itemId));
-  const unknownQ = [...qIds].filter((id) => !known.has(id));
-  if (unknownQ.length) throw new Error("Unknown " + label + " items: " + unknownQ.join(", "));
+function checkBank(list, re, label, requireKnown) {
+  if (requireKnown !== false) {
+    const qIds = new Set(list.map((q) => q.itemId));
+    const unknownQ = [...qIds].filter((id) => !known.has(id));
+    if (unknownQ.length) throw new Error("Unknown " + label + " items: " + unknownQ.join(", "));
+  }
   const leaked = list.filter((q) => re.test(q.q + q.answer + (q.explain || "") + q.options.join(" ")));
   if (leaked.length) throw new Error("Article number leaked in " + label + ": " + leaked[0].q);
 }
@@ -165,4 +169,6 @@ checkBank(questions164, /164\.\d/, "q164");
 checkBank(questions106, /106\.\d/, "q106");
 checkBank(questions199, /199\.\d/, "q199");
 checkBank(questions207, /207\.\d/, "q207");
-console.log("wrote index.html", counts, "total", ids.length, "titles", titled, "overlaps", cleanOverlaps.length, "q102", questions102.length, "q164", questions164.length, "q106", questions106.length, "q199", questions199.length, "q207", questions207.length, "vat", Object.keys(vatMatrix.rows).length);
+checkBank(questionsSosial, /14\.\d|13\.\d|14-1|\b19\.\d|\b12-ci|\b15-ci|\b16-cı|\b17-ci|\b18-ci|\b20-ci/, "qsosial", false);
+checkBank(questionsOrta, /\b177\b/, "qorta", false);
+console.log("wrote index.html", counts, "total", ids.length, "titles", titled, "overlaps", cleanOverlaps.length, "q102", questions102.length, "q164", questions164.length, "q106", questions106.length, "q199", questions199.length, "q207", questions207.length, "qsosial", questionsSosial.length, "qorta", questionsOrta.length, "vat", Object.keys(vatMatrix.rows).length);
