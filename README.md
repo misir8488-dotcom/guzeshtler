@@ -14,6 +14,6 @@ Ana ekrana qoymaq üçün brauzerin paylaş düyməsindən **Ana ekrana əlavə 
 
 - **Oxu** — qısa başlıqlar. Başlığa toxun, tam mətn açılsın. Manat, faiz və il rənglə seçilir.
 - **Kart** — əvvəl xatırla, sonra aç. Bilirəm / Çətin / Təkrar telefonda yadda qalır.
-- **Sınaq** — gəlir, mənfəət və ƏDV nəzəri suallar. Bənd nömrəsi çıxmır.
+- **Sınaq** — gəlir, mənfəət, ƏDV, əmlak və torpaq nəzəri suallar. Bənd nömrəsi çıxmır.
 - **Ortaq cədvəl** — eyni güzəştin bir neçə vergidə təkrarları.
 - **ƏDV cədvəli** — idxal / istehsal / satış / xidmət.

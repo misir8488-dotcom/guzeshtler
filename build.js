@@ -109,6 +109,8 @@ const { titles, overlaps } = loadExtras();
 const questions102 = loadQuestions("questions-102.js", "Q102");
 const questions164 = loadQuestions("questions-164.js", "Q164");
 const questions106 = loadQuestions("questions-106.js", "Q106");
+const questions199 = loadQuestions("questions-199.js", "Q199");
+const questions207 = loadQuestions("questions-207.js", "Q207");
 const vatMatrix = loadVatMatrix();
 const articles = files.map(parseFile);
 for (const art of articles) {
@@ -145,7 +147,7 @@ const cleanOverlaps = overlaps
   .filter((o) => o.items.length);
 const vatUnknown = Object.keys(vatMatrix.rows || {}).filter((id) => !known.has(id));
 if (vatUnknown.length) throw new Error("Unknown VAT matrix ids: " + vatUnknown.join(", "));
-const json = JSON.stringify({ articles, overlaps: cleanOverlaps, questions102, questions164, questions106, vatMatrix }).replace(/</g, "\\u003c");
+const json = JSON.stringify({ articles, overlaps: cleanOverlaps, questions102, questions164, questions106, questions199, questions207, vatMatrix }).replace(/</g, "\\u003c");
 html = html.replace("__DATA_JSON__", json);
 fs.writeFileSync(path.join(root, "index.html"), html);
 
@@ -161,4 +163,6 @@ function checkBank(list, re, label) {
 checkBank(questions102, /102\.\d/, "q102");
 checkBank(questions164, /164\.\d/, "q164");
 checkBank(questions106, /106\.\d/, "q106");
-console.log("wrote index.html", counts, "total", ids.length, "titles", titled, "overlaps", cleanOverlaps.length, "q102", questions102.length, "q164", questions164.length, "q106", questions106.length, "vat", Object.keys(vatMatrix.rows).length);
+checkBank(questions199, /199\.\d/, "q199");
+checkBank(questions207, /207\.\d/, "q207");
+console.log("wrote index.html", counts, "total", ids.length, "titles", titled, "overlaps", cleanOverlaps.length, "q102", questions102.length, "q164", questions164.length, "q106", questions106.length, "q199", questions199.length, "q207", questions207.length, "vat", Object.keys(vatMatrix.rows).length);
