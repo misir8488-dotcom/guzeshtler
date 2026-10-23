@@ -1,0 +1,19 @@
+{
+  "name": "Güzəştlər — Vergi Məcəlləsi",
+  "short_name": "Güzəştlər",
+  "description": "102, 106, 164, 199, 207 azadolmalarını ezberlə",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#efe7da",
+  "theme_color": "#0f6a45",
+  "lang": "az",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
