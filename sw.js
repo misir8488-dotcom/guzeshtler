@@ -1,4 +1,4 @@
-const CACHE = "guzeshtler-v11";
+const CACHE = "guzeshtler-v12";
 const ASSETS = [
   "./",
   "./index.html",
